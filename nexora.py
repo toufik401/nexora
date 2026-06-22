@@ -1,10 +1,6 @@
-
 import streamlit as st
 import requests
-
-# 1. إعدادات الصفحة
 st.set_page_config(page_title="معاً لنطور تجارة مدينتنا", layout="centered")
-
 # 2. CSS للخلفية والعنوان الذهبي
 st.markdown("""
     <style>
