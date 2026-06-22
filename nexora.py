@@ -59,12 +59,12 @@ with st.container():
 st.write("<br>", unsafe_allow_html=True)
 with st.container():
     st.markdown("<div class='content-box'>", unsafe_allow_html=True)
-    st.subheader("📝 طلب ")
+    st.subheader("📝 طلب فاتورة جديدة")
     with st.form("invoice_form", clear_on_submit=True):
         name = st.text_input("الاسم الكريم")
         phone = st.text_input("رقم الهاتف")
-        insta = st.text_input("حساب الإنستغرام")
-        submit = st.form_submit_button("إرسال الطلب ")
+        insta = st.text_input("حساب الإنستغرام (اختياري)")
+        submit = st.form_submit_button("إرسال الطلب (تليجرام)")
         
         if submit:
             if name and phone:
@@ -79,4 +79,4 @@ with st.container():
                     st.success("تم إرسال طلبك بنجاح!")
             else:
                 st.error("يرجى ملء الاسم ورقم الهاتف!")
-    st.markdown("</div>", unsafe_allow_html=True
+    st.markdown("</div>", unsafe_allow_html=True)
