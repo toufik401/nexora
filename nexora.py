@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 st.set_page_config(page_title="معاً لنطور تجارة مدينتنا", layout="centered")
 # 2. CSS للخلفية والعنوان الذهبي
-st.markdown("""
+st.markdown(""
     <style>
     .stApp {
         background-image: url("https://img.freepik.com/free-vector/dark-background-with-golden-lines_1017-27083.jpg");
@@ -34,7 +34,7 @@ st.write("<br>", unsafe_allow_html=True)
 
 with st.container():
     st.markdown("<div class='content-box'>", unsafe_allow_html=True)
-    st.markdown("<a href="https://ibb.co/TMc4W7GS"><img src="https://i.ibb.co/v413XTWG/1782140096443.png" alt="1782140096443" border="0"></a><br /><a target='_blank' href='https://usefulwebtool.com/fr/convertir-texte-en-binaire'>que veut dire binaire</a><br />")
+    st.markdown("""<a href="https://ibb.co/TMc4W7GS"><img src="https://i.ibb.co/v413XTWG/1782140096443.png" alt="1782140096443" border="0"></a><br /><a target='_blank' href='https://usefulwebtool.com/fr/convertir-texte-en-binaire'>que veut dire binaire</a><br />")
     st.image(st.session_state.img, use_container_width=True)
     st.markdown(f"<h2 style='text-align: center; color: black;'>السعر: {st.session_state.price} دج</h2>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
