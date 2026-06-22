@@ -19,10 +19,6 @@ st.markdown("""
     .content-box { background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 15px; }
     </style>
 """, unsafe_allow_html=True)
-
-
-if 'available' not in st.session_state: st.session_state.available = True
-
 # 4. لوحة تحكم المالك
 st.sidebar.title("🛠️ لوحة تحكم المالك")
 pwd = st.sidebar.text_input("كلمة سر المالك", type="password")
@@ -52,7 +48,6 @@ with st.container():
     st.image(st.session_state.img, use_container_width=True)
     st.markdown(f"<h2 style='text-align: center; color: black;'>السعر: {st.session_state.price} دج</h2>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
-
 # 6. نموذج الفاتورة
 st.write("<br>", unsafe_allow_html=True)
 with st.container():
