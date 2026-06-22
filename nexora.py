@@ -4,7 +4,7 @@ import requests
 # 1. إعدادات الصفحة
 st.set_page_config(page_title="متجر NEXORA", layout="centered")
 
-# 2. CSS للخلفية والعناصر
+# 2. CSS للخلفية وتنسيق النصوص (النصوص داخل المربعات بالأسود)
 st.markdown("""
     <style>
     .stApp {
@@ -12,19 +12,31 @@ st.markdown("""
         background-size: cover;
         background-attachment: fixed;
     }
+    .stApp::before { display: none; }
+    
     .gold-title { 
         text-align: center; color: #D4AF37; border: 3px solid #D4AF37; 
-        padding: 15px; border-radius: 20px; background: rgba(0, 0, 0, 0.9); 
+        padding: 15px; border-radius: 20px; background: rgba(0, 0, 0, 0.8); 
     }
     .content-box { background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 15px; }
+    
+    /* جعل الكتابة داخل مربعات الإدخال باللون الأسود */
+    .stTextInput > div > div > input {
+        color: black !important;
+        font-weight: bold;
+    }
     </style>
 """, unsafe_allow_html=True)
+
+# 3. إعدادات البيانات
+if 'img' not in st.session_state: st.session_state.img = "https://i.ibb.co/27SxJFCY/IMG-20260621-230717-021.jpg"
+if 'available' not in st.session_state: st.session_state.available = True
+
 # 4. لوحة تحكم المالك
 st.sidebar.title("🛠️ لوحة تحكم المالك")
 pwd = st.sidebar.text_input("كلمة سر المالك", type="password")
 if pwd == "1234":
     st.session_state.img = st.sidebar.text_input("رابط صورة المنتج:", st.session_state.img)
-    st.session_state.price = st.sidebar.text_input("تعديل السعر:", st.session_state.price)
     st.session_state.available = st.sidebar.checkbox("المنتج متوفر؟", st.session_state.available)
     st.sidebar.success("تم التحديث!")
 
@@ -34,8 +46,6 @@ st.write("<br>", unsafe_allow_html=True)
 
 with st.container():
     st.markdown("<div class='content-box'>", unsafe_allow_html=True)
-    
-    # حالة غير متوفر
     if not st.session_state.available:
         st.markdown("""
             <div style="text-align: center; margin-bottom: 10px;">
@@ -46,8 +56,8 @@ with st.container():
         """, unsafe_allow_html=True)
     
     st.image(st.session_state.img, use_container_width=True)
-    st.markdown(f"<h2 style='text-align: center; color: black;'>السعر: {st.session_state.price} دج</h2>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
+
 # 6. نموذج الفاتورة
 st.write("<br>", unsafe_allow_html=True)
 with st.container():
@@ -63,10 +73,8 @@ with st.container():
             if name and phone:
                 token = "8640762406:AAF540rnfipL54HSUIRZqODSsBcQjM2uybo"
                 chat_id = "7055252264"
-                msg = f"🛒 طلب جديد!\nالاسم: {name}\nالهاتف: {phone}\nإنستغرام: {insta if insta else 'غير مذكور'}\nالسعر: {st.session_state.price}"
-                
+                msg = f"🛒 طلب جديد!\nالاسم: {name}\nالهاتف: {phone}\nإنستغرام: {insta if insta else 'غير مذكور'}"
                 res = requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={"chat_id": chat_id, "text": msg})
-                
                 if res.status_code == 200:
                     st.balloons()
                     st.success("تم إرسال طلبك بنجاح!")
