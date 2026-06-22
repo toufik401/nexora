@@ -4,15 +4,21 @@ import requests
 # 1. إعدادات الصفحة
 st.set_page_config(page_title="متجر NEXORA", layout="centered")
 
-# 2. CSS للخلفية وتنسيق النصوص (النصوص داخل المربعات بالأسود)
+# 2. CSS للخلفية بدون أي تعتيم نهائياً
 st.markdown("""
     <style>
+    /* جعل الخلفية هي الصورة فقط */
     .stApp {
         background-image: url("https://i.ibb.co/v413XTWG/1782140096443.png");
         background-size: cover;
         background-attachment: fixed;
+        background-position: center;
     }
-    .stApp::before { display: none; }
+    
+    /* منع أي طبقة كحلة */
+    .stApp::before {
+        display: none !important;
+    }
     
     .gold-title { 
         text-align: center; color: #D4AF37; border: 3px solid #D4AF37; 
@@ -20,7 +26,7 @@ st.markdown("""
     }
     .content-box { background: rgba(255, 255, 255, 0.95); padding: 20px; border-radius: 15px; }
     
-    /* جعل الكتابة داخل مربعات الإدخال باللون الأسود */
+    /* الكتابة في المربعات باللون الأسود */
     .stTextInput > div > div > input {
         color: black !important;
         font-weight: bold;
@@ -47,14 +53,7 @@ st.write("<br>", unsafe_allow_html=True)
 with st.container():
     st.markdown("<div class='content-box'>", unsafe_allow_html=True)
     if not st.session_state.available:
-        st.markdown("""
-            <div style="text-align: center; margin-bottom: 10px;">
-                <h1 style="color: red; background: white; padding: 10px; border-radius: 10px; border: 2px solid red;">
-                ❌ غير متوفر حالياً ❌
-                </h1>
-            </div>
-        """, unsafe_allow_html=True)
-    
+        st.markdown("<h1 style='color: red; text-align: center;'>❌ غير متوفر حالياً ❌</h1>", unsafe_allow_html=True)
     st.image(st.session_state.img, use_container_width=True)
     st.markdown("</div>", unsafe_allow_html=True)
 
@@ -74,10 +73,9 @@ with st.container():
                 token = "8640762406:AAF540rnfipL54HSUIRZqODSsBcQjM2uybo"
                 chat_id = "7055252264"
                 msg = f"🛒 طلب جديد!\nالاسم: {name}\nالهاتف: {phone}\nإنستغرام: {insta if insta else 'غير مذكور'}"
-                res = requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={"chat_id": chat_id, "text": msg})
-                if res.status_code == 200:
-                    st.balloons()
-                    st.success("تم إرسال طلبك بنجاح!")
+                requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={"chat_id": chat_id, "text": msg})
+                st.balloons()
+                st.success("تم إرسال طلبك بنجاح!")
             else:
-                st.error("يرجى ملء الاسم ورقم الهاتف!")
+                st.error("يرجى ملء البيانات!")
     st.markdown("</div>", unsafe_allow_html=True)
