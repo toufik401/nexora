@@ -20,9 +20,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 3. إعدادات البيانات
-if 'img' not in st.session_state: st.session_state.img = "https://i.ibb.co/27SxJFCY/IMG-20260621-230717-021.jpg"
-if 'price' not in st.session_state: st.session_state.price = "1000"
+
 if 'available' not in st.session_state: st.session_state.available = True
 
 # 4. لوحة تحكم المالك
