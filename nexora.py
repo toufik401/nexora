@@ -4,7 +4,7 @@ import requests
 # 1. إعدادات الصفحة
 st.set_page_config(page_title="NEXORA", layout="centered")
 
-# 2. تنسيق CSS: خلفية كاملة + استمارة شفافة تماماً + خطوط واضحة
+# 2. تنسيق CSS: خلفية شفافة ومسافات واضحة
 st.markdown("""
     <style>
     /* صورة الخلفية */
@@ -15,30 +15,36 @@ st.markdown("""
         background-attachment: fixed;
     }
     
-    /* جعل الاستمارة متناغمة (بدون مستطيل بارز) */
+    /* جعل الاستمارة شفافة تماماً */
     .stForm {
-        background: rgba(255, 255, 255, 0.9) !important;
-        padding: 20px;
-        border-radius: 15px;
+        background: transparent !important;
+        border: none !important;
     }
     
-    /* كتابة واضحة في الخانات */
+    /* إضافة مسافة بين الخانات */
+    .stTextInput, .stSelectbox {
+        margin-bottom: 25px !important;
+    }
+    
+    /* تنسيق الخانات (لون الكتابة أسود داخل خانة بيضاء شفافة قليلاً للوضوح) */
     .stTextInput input, .stSelectbox select {
         color: #000 !important;
-        font-size: 18px !important;
+        background-color: rgba(255, 255, 255, 0.8) !important;
         font-weight: bold !important;
+        border-radius: 10px !important;
     }
     
-    /* تسميات الخانات باللون الأسود الغامق */
+    /* عناوين الخانات باللون الأبيض ليظهروا فوق الخلفية */
     label {
-        color: #000 !important;
+        color: white !important;
         font-weight: bold !important;
+        font-size: 16px !important;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# 3. واجهة المتجر (بدون عناوين إضافية)
-st.write("<br><br><br>", unsafe_allow_html=True)
+# 3. واجهة الطلب
+st.write("<br><br>", unsafe_allow_html=True)
 
 with st.form("clean_form"):
     name = st.text_input("الاسم الكامل")
@@ -55,6 +61,6 @@ with st.form("clean_form"):
             msg = f"🛒 طلب جديد NEXORA\nالاسم: {name}\nالولاية: {province}\nالهاتف: {phone}\nإنستغرام: {insta}"
             requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={"chat_id": chat_id, "text": msg})
             st.balloons()
-            st.success("تم الإرسال!")
+            st.success("تم الإرسال بنجاح!")
         else:
             st.error("يرجى ملء البيانات")
