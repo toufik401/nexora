@@ -1,3 +1,5 @@
+import streamlit as st
+import requests
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
