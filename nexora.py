@@ -4,7 +4,7 @@ import requests
 # 1. إعدادات الصفحة
 st.set_page_config(page_title="NEXORA - خدمة احترافية", layout="centered")
 
-# 2. تنسيق CSS (شفافية تامة للمربعات)
+# 2. تنسيق CSS (شفافية المربعات + الكتابة بالأسود)
 st.markdown("""
     <style>
     .stApp {
@@ -16,19 +16,19 @@ st.markdown("""
     
     /* جعل المربعات شفافة تماماً */
     .stTextInput > div > div > input, .stSelectbox > div > div > div {
-        background: transparent !important;
-        color: white !important;
+        background: rgba(255, 255, 255, 0.8) !important; /* خلفية بيضاء خفيفة وشفافة */
+        color: black !important; /* لون الكتابة أسود */
         border: 1px solid rgba(255, 255, 255, 0.5) !important;
         border-radius: 15px !important;
-        font-weight: bold;
+        font-weight: bold !important;
     }
     
-    /* تنسيق العناوين (Label) لتبقى واضحة */
+    /* العناوين (Labels) تبقى بيضاء لتبان فوق الخلفية */
     label { color: #ffffff !important; font-size: 18px !important; font-weight: bold !important; }
     
     /* زر الإرسال */
     .stButton > button {
-        background: rgba(59, 130, 246, 0.8) !important;
+        background: rgba(59, 130, 246, 0.9) !important;
         color: white !important;
         border-radius: 15px !important;
         width: 100%;
@@ -39,7 +39,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 3. العنوان والترحيب
+# 3. واجهة الطلب
 st.markdown("<h1 style='text-align: center; color: white; font-size: 3em;'>✨ مرحباً بك في خدمتنا ✨</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: white; font-size: 1.5em;'>بدون أي اشتراك شهري - متجر إلكتروني خاص بك</h3>", unsafe_allow_html=True)
 st.write("<br>")
@@ -62,8 +62,7 @@ with st.form("clean_form"):
             msg = f"🛒 طلب جديد لمتجر Nexora\nنوع التجارة: {business_type}\nالاسم: {name}\nالهاتف: {phone}\nإنستغرام: {insta}"
             requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={"chat_id": chat_id, "text": msg})
             
-            # تأثير النجاح
             st.balloons()
-            st.success("تم إرسال طلبك بنجاح! سنتواصل معك قريباً.")
+            st.success("تم إرسال طلبك بنجاح!")
         else:
             st.error("يرجى ملء البيانات المطلوبة.")
