@@ -4,7 +4,7 @@ import requests
 # 1. إعدادات الصفحة
 st.set_page_config(page_title="NEXORA - خدمة احترافية", layout="centered")
 
-# 2. تنسيق CSS احترافي (زجاجي شفاف)
+# 2. تنسيق CSS (شفافية كاملة للمربعات)
 st.markdown("""
     <style>
     .stApp {
@@ -13,32 +13,35 @@ st.markdown("""
         background-position: center;
         background-attachment: fixed;
     }
-    /* جعل المربعات زجاجية شفافة */
+    
+    /* جعل المربعات شفافة تماماً مع إطار خفيف */
     .stTextInput > div > div > input, .stSelectbox > div > div > div {
-        background: rgba(255, 255, 255, 0.2) !important;
+        background: rgba(255, 255, 255, 0.1) !important;
         color: white !important;
-        border: 1px solid rgba(255, 255, 255, 0.4) !important;
-        border-radius: 12px !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 15px !important;
         font-weight: bold;
     }
+    
     /* تنسيق العناوين (Label) */
     label { color: #ffffff !important; font-size: 18px !important; font-weight: bold !important; }
     
     /* زر الإرسال */
     .stButton > button {
-        background: #3b82f6 !important;
+        background: rgba(59, 130, 246, 0.8) !important;
         color: white !important;
-        border-radius: 10px !important;
+        border-radius: 15px !important;
         width: 100%;
         padding: 12px;
         font-size: 18px;
+        border: none;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# 3. العنوان الكبير والترحيب
+# 3. العنوان والترحيب
 st.markdown("<h1 style='text-align: center; color: white; font-size: 3em;'>✨ مرحباً بك في خدمتنا ✨</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: #3b82f6;'>بدون أي اشتراك شهري - متجر إلكتروني خاص بك</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: white; font-size: 1.5em;'>بدون أي اشتراك شهري - متجر إلكتروني خاص بك</h3>", unsafe_allow_html=True)
 st.write("<br>")
 
 # 4. الاستمارة
@@ -59,7 +62,7 @@ with st.form("clean_form"):
             msg = f"🛒 طلب جديد لمتجر Nexora\nنوع التجارة: {business_type}\nالاسم: {name}\nالهاتف: {phone}\nإنستغرام: {insta}"
             requests.post(f"https://api.telegram.org/bot{token}/sendMessage", data={"chat_id": chat_id, "text": msg})
             
-            # تأثير النجاح (نجوم وخيوط ملونة)
+            # تأثير النجاح
             st.balloons()
             st.success("تم إرسال طلبك بنجاح! سنتواصل معك قريباً.")
         else:
