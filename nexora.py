@@ -4,7 +4,7 @@ import requests
 # 1. إعدادات الصفحة
 st.set_page_config(page_title="NEXORA - خدمة احترافية", layout="centered")
 
-# 2. تنسيق CSS (شفافية كاملة للمربعات)
+# 2. تنسيق CSS (شفافية تامة للمربعات)
 st.markdown("""
     <style>
     .stApp {
@@ -14,16 +14,16 @@ st.markdown("""
         background-attachment: fixed;
     }
     
-    /* جعل المربعات شفافة تماماً مع إطار خفيف */
+    /* جعل المربعات شفافة تماماً */
     .stTextInput > div > div > input, .stSelectbox > div > div > div {
-        background: rgba(255, 255, 255, 0.1) !important;
+        background: transparent !important;
         color: white !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.5) !important;
         border-radius: 15px !important;
         font-weight: bold;
     }
     
-    /* تنسيق العناوين (Label) */
+    /* تنسيق العناوين (Label) لتبقى واضحة */
     label { color: #ffffff !important; font-size: 18px !important; font-weight: bold !important; }
     
     /* زر الإرسال */
