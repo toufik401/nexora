@@ -4,23 +4,26 @@ import requests
 # 2. حقن CSS للتحكم في الألوان، الشفافية، والخلفية
 st.markdown("""
     <style>
-    /* 1. تثبيت الخلفية (حفظ إعدادات العرض) */
+    /* 1. تثبيت الخلفية مع force-load للهواتف */
     [data-testid="stAppViewContainer"] {
         background-image: url("https://i.ibb.co/v413XTWG/1782140096443.png") !important;
         background-size: cover !important;
         background-position: center !important;
-        background-attachment: fixed !important; /* هذا هو مفتاح التثبيت */
+        background-attachment: fixed !important;
         background-repeat: no-repeat !important;
     }
     
-    /* 2. إجبار المتصفح على عدم إخفاء الخلفية */
+    /* 2. إلغاء أي خلفية بيضاء تفرضها Streamlit على الصفحة */
     div.stApp {
         background: transparent !important;
     }
     
-    /* 3. جعل كامل جسم الصفحة شفافاً لتظهر الخلفية */
-    [data-testid="stApp"] {
-        background-color: rgba(0,0,0,0) !important;
+    /* 3. تعديل حجم الخلفية تلقائياً للأجهزة الصغيرة (تجاوب) */
+    @media (max-width: 768px) {
+        [data-testid="stAppViewContainer"] {
+            background-size: contain !important; /* أو 'cover' إذا أردت الصورة كاملة */
+            background-position: center top !important;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
