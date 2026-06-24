@@ -80,10 +80,6 @@ def send_to_telegram(text):
                 }
             )
             
-       if submit:
-        if name and phone:
-            # ... كود إرسال التليجرام ...
-            
             # ضع الـ success هنا داخل شرط النجاح فقط
             st.balloons()
             st.success("تم إرسال طلبك بنجاح! ⭐⭐⭐")
