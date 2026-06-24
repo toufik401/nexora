@@ -68,22 +68,9 @@ def send_to_telegram(text):
                 f"📸 **حساب إنستغرام:** {insta}\n"
                 f"━━━━━━━━━━━━━━\n"
                 f"✅ تم استلام الطلب بنجاح"
-            )
-            
-            # إرسال الفاتورة مع تحديد parse_mode لتدعم التنسيق
-            requests.post(
-                f"https://api.telegram.org/bot{token}/sendMessage", 
-                data={
-                    "chat_id": chat_id, 
-                    "text": invoice_msg,
-                    "parse_mode": "Markdown"
-                }
-            )
-            
-            # ضع الـ success هنا داخل شرط النجاح فقط
-            st.balloons()
-            st.success("تم إرسال طلبك بنجاح! ⭐⭐⭐")
-            
+            (
+         st.balloons()
+            st.success("تم إرسال طلبك بنجاح!")
         else:
-            # هذا يظهر فقط إذا لم يملأ الزبون البيانات
-            st.error("يرجى ملء البيانات المطلوبة.")
+            st.error("يرجى ملء البيانات المطلوبة.")   
+         
