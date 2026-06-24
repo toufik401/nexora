@@ -53,15 +53,35 @@ with st.form("order_form"):
 
 # 5. إرسال الطلب إلى تيليجرام
 def send_to_telegram(text):
-    token = "8640762406:AAF540rnfipL54HSUIRZqODSsBcQjM2uybo"
-    chat_id = "7055252264"
-    url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={text}"
-    requests.get(url)
-
-if submit:
-    order_data = f"طلب جديد من {name}، الولاية: {state}، الهاتف: {phone}، النشاط: {trade_type}"
-    send_to_telegram(order_data)
-    
+   if submit:
+        if name and phone:
+            token = '8640762406:AAF540rnfipL54HSUIRZqODSsBcQjM2uybo'
+            chat_id = '7055252264'
+            
+            # تنسيق الفاتورة
+            invoice_msg = (
+                f"🧾 **فاتورة طلب جديدة من Nexora**\n"
+                f"━━━━━━━━━━━━━━\n"
+                f"👤 **الاسم:** {name}\n"
+                f"📞 **الهاتف:** {phone}\n"
+                f"🍱 **نوع التجارة:** {business_type}\n"
+                f"📸 **حساب إنستغرام:** {insta}\n"
+                f"━━━━━━━━━━━━━━\n"
+                f"✅ تم استلام الطلب بنجاح"
+            )
+            
+            # إرسال الفاتورة مع تحديد parse_mode لتدعم التنسيق
+            requests.post(
+                f"https://api.telegram.org/bot{token}/sendMessage", 
+                data={
+                    "chat_id": chat_id, 
+                    "text": invoice_msg,
+                    "parse_mode": "Markdown"
+                }
+            )
+            
+        else:
+            st.error("يرجى ملء البيانات المطلوبة.")
     # 8. تأثير النجوم الذهبية
     st.balloons() 
     st.success("تم إرسال طلبك بنجاح! ⭐⭐⭐")
