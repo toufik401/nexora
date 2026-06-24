@@ -1,10 +1,6 @@
 import streamlit as st
 import pandas as pd
 import requests
-
-# 1. إعدادات الصفحة
-st.set_page_config(page_title="Nexora Store", layout="centered")
-
 # 2. حقن CSS للتحكم في الألوان، الشفافية، والخلفية
 st.markdown("""
     <style>
@@ -44,7 +40,7 @@ with st.form("order_form"):
     state = st.text_input("الولاية")
     phone = st.text_input("رقم الهاتف")
     insta = st.text_input("حساب انستغرام أو رابط")
-    trade_type = st.selectbox("نوع التجارة الخاصة بك", ["مواد غذائية", "ألبسة", "مأكولات", "حلويات", "لي سالي"])
+    trade_type = st.selectbox("نوع التجارة الخاصة بك", ["مواد غذائية", "ألبسة", "مأكولات", "حلويات"])
     
     submit = st.form_submit_button("إرسال الطلب")
 
