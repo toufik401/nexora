@@ -38,7 +38,9 @@ with st.sidebar:
     if st.session_state.logged_in:
         st.color_picker("اختر لون الخط", "#FFFFFF")
         st.file_uploader("تغيير صورة الخلفية")
-
+if st.sidebar.button("حفظ الإعدادات"):
+    st.session_state.saved = True
+    st.sidebar.success("تم حفظ إعدادات العرض بنجاح!")
 # 4. واجهة الزبون
 st.title("🛍️ متجر Nexora")
 
