@@ -1,14 +1,9 @@
 import streamlit as st
 import requests
-
-# 1. إعدادات الصفحة
-st.set_page_config(page_title="NEXORA", layout="centered")
-
-# 2. حقن CSS (الحل النهائي لتثبيت الخلفية على الهاتف والكمبيوتر)
 st.markdown("""
     <style>
-    /* فرض الخلفية على كامل الشاشة */
-    html, body, [data-testid="stAppViewContainer"] {
+    /* نضع الصورة مباشرة في كود الـ CSS وتعمل على جميع الهواتف */
+    .stApp {
         background-image: url("https://i.ibb.co/v413XTWG/1782140096443.png") !important;
         background-size: cover !important;
         background-position: center !important;
@@ -16,19 +11,19 @@ st.markdown("""
         background-repeat: no-repeat !important;
     }
     
-    /* جعل كل الحاويات شفافة لتظهر الخلفية */
-    .stApp, div[data-testid="stVerticalBlock"], div[data-testid="stForm"] {
-        background: transparent !important;
+    /* شفافية الحاويات */
+    div[data-testid="stForm"], div[data-testid="stVerticalBlock"] {
+        background: rgba(255, 255, 255, 0.1) !important;
+        backdrop-filter: blur(5px) !important;
+        border-radius: 15px !important;
+        padding: 20px !important;
     }
     
-    /* تنسيق المربعات لتكون واضحة */
-    .stTextInput > div > div > input, .stSelectbox > div > div > div {
-        background: rgba(255, 255, 255, 0.9) !important;
-        color: black !important;
-        border-radius: 10px !important;
-    }
+    /* تنسيق النصوص لتكون واضحة فوق أي خلفية */
+    h1, h2, h3, label { color: white !important; font-weight: bold !important; }
     </style>
 """, unsafe_allow_html=True)
+
 
 # 3. لوحة تحكم المالك
 if "logged_in" not in st.session_state: st.session_state.logged_in = False
