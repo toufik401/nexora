@@ -4,26 +4,22 @@ import requests
 # 2. حقن CSS للتحكم في الألوان، الشفافية، والخلفية
 st.markdown("""
     <style>
-    /* 1. تثبيت الخلفية مع force-load للهواتف */
-    [data-testid="stAppViewContainer"] {
+    /* هاد الكود يستهدف المتصفح مباشرة وليس عناصر ستريمليت فقط */
+    html, body, [data-testid="stAppViewContainer"] {
         background-image: url("https://i.ibb.co/v413XTWG/1782140096443.png") !important;
         background-size: cover !important;
         background-position: center !important;
         background-attachment: fixed !important;
-        background-repeat: no-repeat !important;
     }
     
-    /* 2. إلغاء أي خلفية بيضاء تفرضها Streamlit على الصفحة */
-    div.stApp {
+    /* إجبار كل الطبقات تكون شفافة */
+    .stApp {
         background: transparent !important;
     }
     
-    /* 3. تعديل حجم الخلفية تلقائياً للأجهزة الصغيرة (تجاوب) */
-    @media (max-width: 768px) {
-        [data-testid="stAppViewContainer"] {
-            background-size: contain !important; /* أو 'cover' إذا أردت الصورة كاملة */
-            background-position: center top !important;
-        }
+    /* تنظيف أي خلفية إضافية قد يضعها ستريمليت */
+    div[data-testid="stVerticalBlock"] {
+        background: transparent !important;
     }
     </style>
 """, unsafe_allow_html=True)
