@@ -4,24 +4,23 @@ import requests
 # 2. حقن CSS للتحكم في الألوان، الشفافية، والخلفية
 st.markdown("""
     <style>
-    /* إضافة force-load للخلفية */
+    /* 1. تثبيت الخلفية (حفظ إعدادات العرض) */
     [data-testid="stAppViewContainer"] {
         background-image: url("https://i.ibb.co/v413XTWG/1782140096443.png") !important;
         background-size: cover !important;
         background-position: center !important;
-        background-attachment: fixed !important;
+        background-attachment: fixed !important; /* هذا هو مفتاح التثبيت */
         background-repeat: no-repeat !important;
     }
     
-    /* إخفاء أي خلفية بيضاء تفرضها Streamlit على الصفحة */
-    [data-testid="stAppViewContainer"] > div {
-        background-color: transparent !important;
+    /* 2. إجبار المتصفح على عدم إخفاء الخلفية */
+    div.stApp {
+        background: transparent !important;
     }
     
-    /* إخفاء خلفية الاستمارة */
-    div[data-testid="stForm"] {
-        background: transparent !important;
-        border: none !important;
+    /* 3. جعل كامل جسم الصفحة شفافاً لتظهر الخلفية */
+    [data-testid="stApp"] {
+        background-color: rgba(0,0,0,0) !important;
     }
     </style>
 """, unsafe_allow_html=True)
