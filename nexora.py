@@ -4,20 +4,27 @@ import requests
 # 2. حقن CSS للتحكم في الألوان، الشفافية، والخلفية
 st.markdown("""
     <style>
-    /* خلفية الصفحة */
-    .stApp {
-        background: url('https://i.ibb.co/v413XTWG/1782140096443.png');
-        background-size: cover;
+    /* إضافة force-load للخلفية */
+    [data-testid="stAppViewContainer"] {
+        background-image: url("https://i.ibb.co/v413XTWG/1782140096443.png") !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+        background-repeat: no-repeat !important;
     }
-    div[data-baseweb="input"] {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid white !important;
+    
+    /* إخفاء أي خلفية بيضاء تفرضها Streamlit على الصفحة */
+    [data-testid="stAppViewContainer"] > div {
+        background-color: transparent !important;
     }
-    input { color: white !important; }
-    label { color: white !important; font-weight: bold; }
+    
+    /* إخفاء خلفية الاستمارة */
+    div[data-testid="stForm"] {
+        background: transparent !important;
+        border: none !important;
+    }
     </style>
-    """, unsafe_allow_html=True)
-
+""", unsafe_allow_html=True)
 # 3. لوحة تحكم المالك (مخفية عبر كلمة سر)
 if "logged_in" not in st.session_state: st.session_state.logged_in = False
 
