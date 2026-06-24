@@ -68,7 +68,7 @@ def send_to_telegram(text):
                 f"📸 **حساب إنستغرام:** {insta}\n"
                 f"━━━━━━━━━━━━━━\n"
                 f"✅ تم استلام الطلب بنجاح"
-            (
+            )
          st.balloons()
             st.success("تم إرسال طلبك بنجاح!")
         else:
