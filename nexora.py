@@ -1,44 +1,49 @@
 import streamlit as st
-import pandas as pd
 import requests
-# 2. حقن CSS للتحكم في الألوان، الشفافية، والخلفية
+
+# 1. إعدادات الصفحة
+st.set_page_config(page_title="NEXORA", layout="centered")
+
+# 2. حقن CSS (الحل النهائي لتثبيت الخلفية على الهاتف والكمبيوتر)
 st.markdown("""
     <style>
-    /* هاد الكود يستهدف المتصفح مباشرة وليس عناصر ستريمليت فقط */
+    /* فرض الخلفية على كامل الشاشة */
     html, body, [data-testid="stAppViewContainer"] {
         background-image: url("https://i.ibb.co/v413XTWG/1782140096443.png") !important;
         background-size: cover !important;
         background-position: center !important;
         background-attachment: fixed !important;
+        background-repeat: no-repeat !important;
     }
     
-    /* إجبار كل الطبقات تكون شفافة */
-    .stApp {
+    /* جعل كل الحاويات شفافة لتظهر الخلفية */
+    .stApp, div[data-testid="stVerticalBlock"], div[data-testid="stForm"] {
         background: transparent !important;
     }
     
-    /* تنظيف أي خلفية إضافية قد يضعها ستريمليت */
-    div[data-testid="stVerticalBlock"] {
-        background: transparent !important;
+    /* تنسيق المربعات لتكون واضحة */
+    .stTextInput > div > div > input, .stSelectbox > div > div > div {
+        background: rgba(255, 255, 255, 0.9) !important;
+        color: black !important;
+        border-radius: 10px !important;
     }
     </style>
 """, unsafe_allow_html=True)
-# 3. لوحة تحكم المالك (مخفية عبر كلمة سر)
+
+# 3. لوحة تحكم المالك
 if "logged_in" not in st.session_state: st.session_state.logged_in = False
 
 with st.sidebar:
     st.subheader("إعدادات المالك")
     password = st.text_input("كلمة مرور الإدارة", type="password")
-    if password == "1234": # غيّر كلمة السر هنا
+    if password == "1234":
         st.session_state.logged_in = True
-        st.write("تم الدخول للوحة التحكم")
     
     if st.session_state.logged_in:
-        st.color_picker("اختر لون الخط", "#FFFFFF")
-        st.file_uploader("تغيير صورة الخلفية")
-if st.sidebar.button("حفظ الإعدادات"):
-    st.session_state.saved = True
-    st.sidebar.success("تم حفظ إعدادات العرض بنجاح!")
+        st.write("✅ تم الدخول للإدارة")
+        if st.button("حفظ الإعدادات"):
+            st.success("تم الحفظ!")
+
 # 4. واجهة الزبون
 st.title("🛍️ متجر Nexora")
 
@@ -47,30 +52,35 @@ with st.form("order_form"):
     state = st.text_input("الولاية")
     phone = st.text_input("رقم الهاتف")
     insta = st.text_input("حساب انستغرام أو رابط")
-    trade_type = st.selectbox("نوع التجارة الخاصة بك", ["مواد غذائية", "ألبسة", "مأكولات", "حلويات"])
+    trade_type = st.selectbox("نوع التجارة", ["مواد غذائية", "ألبسة", "مأكولات", "حلويات"])
     
     submit = st.form_submit_button("إرسال الطلب")
 
-# 5. إرسال الطلب إلى تيليجرام
-def send_to_telegram(text):
-   if submit:
-        if name and phone:
-            token = '8640762406:AAF540rnfipL54HSUIRZqODSsBcQjM2uybo'
-            chat_id = '7055252264'
-            
-            # تنسيق الفاتورة
-            invoice_msg = (
-                f"🧾 **فاتورة طلب جديدة من Nexora**\n"
-                f"━━━━━━━━━━━━━━\n"
-                f"👤 **الاسم:** {name}\n"
-                f"📞 **الهاتف:** {phone}\n"
-                f"🍱 **نوع التجارة:** {business_type}\n"
-                f"📸 **حساب إنستغرام:** {insta}\n"
-                f"━━━━━━━━━━━━━━\n"
-                f"✅ تم استلام الطلب بنجاح"
-            )
-         st.balloons()
-            st.success("تم إرسال طلبك بنجاح!")
-        else:
-            st.error("يرجى ملء البيانات المطلوبة.")   
-         
+# 5. منطق إرسال الطلب
+if submit:
+    if name and phone:
+        token = '8640762406:AAF540rnfipL54HSUIRZqODSsBcQjM2uybo'
+        chat_id = '7055252264'
+        
+        # تنسيق الفاتورة
+        invoice_msg = (
+            f"🧾 **فاتورة طلب جديدة من Nexora**\n"
+            f"━━━━━━━━━━━━━━\n"
+            f"👤 **الاسم:** {name}\n"
+            f"📍 **الولاية:** {state}\n"
+            f"📞 **الهاتف:** {phone}\n"
+            f"🍱 **نوع التجارة:** {trade_type}\n"
+            f"📸 **حساب إنستغرام:** {insta}\n"
+            f"━━━━━━━━━━━━━━\n"
+            f"✅ تم استلام الطلب بنجاح"
+        )
+        
+        requests.post(
+            f"https://api.telegram.org/bot{token}/sendMessage", 
+            data={"chat_id": chat_id, "text": invoice_msg, "parse_mode": "Markdown"}
+        )
+        
+        st.balloons()
+        st.success("تم إرسال طلبك بنجاح! ⭐⭐⭐")
+    else:
+        st.error("يرجى ملء البيانات المطلوبة (الاسم والهاتف).")
